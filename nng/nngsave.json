@@ -4,19 +4,23 @@
   "data": [
     {
       "lean": "lemma example1 (x y z : mynat) : x * y + z = x * y + z :=\n",
-      "editorText": "sorry"
+      "isSolved": true,
+      "editorText": "refl\r\n"
     },
     {
       "lean": "lemma example2 (x y : mynat) (h : y = x + 7) : 2 * y = 2 * (x + 7) :=\n",
-      "editorText": "sorry"
+      "isSolved": true,
+      "editorText": "rw h;\r\nrefl\r\n\r\n"
     },
     {
       "lean": "lemma example3 (a b : mynat) (h : succ a = b) : succ(succ(a)) = succ(b) :=\n",
-      "editorText": "sorry"
+      "isSolved": true,
+      "editorText": "rw h;\r\nrefl\r\n"
     },
     {
       "lean": "lemma add_succ_zero (a : mynat) : a + succ(0) = succ(a) :=\n",
-      "editorText": "sorry"
+      "isSolved": true,
+      "editorText": "rw add_succ;\r\nrw add_zero;\r\nrefl\r\n"
     },
     {
       "lean": "lemma zero_add (n : mynat) : 0 + n = n :=\n",
