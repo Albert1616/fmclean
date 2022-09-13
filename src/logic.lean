@@ -11,8 +11,7 @@ variables P Q R : Prop
 theorem doubleneg_intro :
   P → ¬¬P  :=
 begin
-  intro hhp,
-  intro h,
+  intros hhp h,
   have hh : false := h hhp,
   exact hh,
 end
@@ -22,24 +21,16 @@ theorem doubleneg_elim :
 begin
   intro np,
   by_contradiction p,
-  have newfalse: false:=np p,
+  have newfalse: false:= np p,
   contradiction,
-  
 end
 
 theorem doubleneg_law :
   ¬¬P ↔ P  :=
 begin
   split,
-  intro np,
-  by_contradiction p,
-  have newfalse: false:=np p,
-  contradiction,
-  intro hhp,
-  intro h,
-  have hh : false := h hhp,
-  exact hh,
-  
+  exact doubleneg_elim P,
+  exact doubleneg_intro P,
 end
 
 ------------------------------------------------
@@ -60,11 +51,11 @@ end
 theorem conj_comm :
   (P ∧ Q) → (Q ∧ P)  :=
 begin
-  intro he,
+  intro peq,
   split,
-  cases he with p q,
+  cases peq with p q,
   exact q,
-  cases he with p q,
+  cases peq with p q,
   exact p,
 end
 
@@ -76,10 +67,9 @@ end
 theorem impl_as_disj_converse :
   (¬P ∨ Q) → (P → Q)  :=
 begin
-  intro impl,
-  intro imp,
+  intros impl p,
   cases impl with np q,
-  have nnp: false := np imp,
+  have nnp: false := np p,
   contradiction,
   exact q,
 end
@@ -87,8 +77,7 @@ end
 theorem disj_as_impl :
   (P ∨ Q) → (¬P → Q)  :=
 begin
-  intro impl,
-  intro np,
+  intros impl np,
   cases impl with p q,
   have nnp: false:= np p,
   contradiction,
@@ -103,19 +92,16 @@ end
 theorem impl_as_contrapositive :
   (P → Q) → (¬Q → ¬P)  :=
 begin
-  intro impl,
-  intro nq,
-  intro imp,
-  have newq: Q:= impl imp,
+  intros impl nq p,
+  have newq: Q:= impl p,
   have ff: false:= nq newq,
   contradiction,
 end
 
-theorem impl_as_contrapositive_converse :
+theorem impl_as_contrapositive_converse :--*
   (¬Q → ¬P) → (P → Q)  :=
 begin
-  intro impl,
-  intro p,
+  intros impl p,
   by_contradiction q,
   have newnp:¬P:=impl q,
   have newfalse: false:=newnp p,
@@ -126,18 +112,8 @@ theorem contrapositive_law :
   (P → Q) ↔ (¬Q → ¬P)  :=
 begin
   split,
-  intro impl,
-  intro nq,
-  intro imp,
-  have newq: Q:= impl imp,
-  have ff: false:= nq newq,
-  contradiction,
-  intro impl,
-  intro p,
-  by_contradiction q,
-  have newnp:¬P:=impl q,
-  have newfalse: false:=newnp p,
-  contradiction,
+  exact impl_as_contrapositive P Q,
+  exact impl_as_contrapositive_converse P Q,
 end
 
 
@@ -149,13 +125,14 @@ theorem lem_irrefutable :
   ¬¬(P∨¬P)  :=
 begin
   intro impl,
-  by_cases p:P,
-  apply impl,
-  left,
-  exact p,
   apply impl,
   right,
-  exact p,
+  intro np,
+  have nporp:P∨¬P,
+  left,
+  exact np,
+  have newfalse:false:=impl nporp,
+  contradiction,
 end
 
 
@@ -166,7 +143,14 @@ end
 theorem peirce_law_weak :
   ((P → Q) → P) → ¬¬P  :=
 begin
- 
+ intros impq np,
+ have nimpl:P → Q,
+ intro p,
+ have newfalse:false:=np p,
+ contradiction,
+ have newP:P:=impq nimpl,
+ have newfalse:false:=np newP,
+ contradiction,
 end
 
 
@@ -177,8 +161,7 @@ end
 theorem disj_as_negconj :
   P∨Q → ¬(¬P∧¬Q)  :=
 begin
-  intro impl,
-  intro nimpl,
+  intros impl nimpl,
   cases impl with p q,
   cases nimpl with np nq,
   have bool: false:= np p,
@@ -191,8 +174,7 @@ end
 theorem conj_as_negdisj :
   P∧Q → ¬(¬P∨¬Q)  :=
 begin
-  intro impl,
-  intro bool,
+  intros impl bool,
   cases bool with np nq,
   cases impl with p q,
   have newfalse: false:= np p,
@@ -225,8 +207,7 @@ end
 theorem demorgan_disj_converse :
   (¬P ∧ ¬Q) → ¬(P∨Q)  :=
 begin
-  intro impl,
-  intro disj,
+  intros impl disj,
   cases disj with p q,
   cases impl with np nq,
   have newfalse:false:=np p,
@@ -240,15 +221,15 @@ theorem demorgan_conj :
   ¬(P∧Q) → (¬Q ∨ ¬P)  :=
 begin
   intro impl,
-  by_contradiction nqp,
-  apply impl,
-  split,
-  by_contradiction np,
-  apply nqp,
+  by_cases q:Q,
   right,
-  assumption,
-  by_contradiction nq,
-  apply nqp,
+  intro p,
+  have pq:P∧Q,
+  split,
+  exact p,
+  exact q,
+  have newfalse:false:=impl pq,
+  contradiction,
   left,
   assumption,
 end
@@ -256,8 +237,7 @@ end
 theorem demorgan_conj_converse :
   (¬Q ∨ ¬P) → ¬(P∧Q)  :=
 begin
-  intro impl,
-  intro disj,
+  intros impl disj,
   cases impl with nq np,
   cases disj with p q,
   have newfalse: false:= nq q,
@@ -271,52 +251,16 @@ theorem demorgan_conj_law :
   ¬(P∧Q) ↔ (¬Q ∨ ¬P)  :=
 begin
   split,
-  intro impl,
-  by_contradiction nqp,
-  apply impl,
-  split,
-  by_contradiction np,
-  apply nqp,
-  right,
-  assumption,
-  by_contradiction nq,
-  apply nqp,
-  left,
-  assumption,
-  intro impl,
-  intro disj,
-  cases impl with nq np,
-  cases disj with p q,
-  have newfalse: false:= nq q,
-  contradiction,
-  cases disj with p q,
-  have newfalse: false:= np p,
-  contradiction,
+  exact demorgan_conj P Q,
+  exact demorgan_conj_converse P Q,
 end
 
 theorem demorgan_disj_law :
   ¬(P∨Q) ↔ (¬P ∧ ¬Q)  :=
 begin
   split,
-  intro impl,
-  split,
-  intro p,
-  apply impl,
-  left,
-  exact p,
-  intro q,
-  apply impl,
-  right,
-  exact q,
-  intro impl,
-  intro disj,
-  cases disj with p q,
-  cases impl with np nq,
-  have newfalse:false:=np p,
-  contradiction,
-  cases impl with np nq,
-  have newfalse:false:=nq q,
-  contradiction,
+  exact demorgan_disj P Q,
+  exact demorgan_disj_converse P Q,
 end
 
 ------------------------------------------------
@@ -331,12 +275,12 @@ begin
   cases qr with q r,
   left,
   split,
-  assumption,
-  assumption,
+  exact p,
+  exact q,
   right,
   split,
-  assumption,
-  assumption,
+  exact p,
+  exact r,
 end
 
 theorem distr_conj_disj_converse :
@@ -345,51 +289,51 @@ begin
   intro impl,
   split,
   cases impl,
-  cases impl with left right,
-  exact left,
-  cases impl with left right,
-  exact left,
+  cases impl with p q,
+  exact p,
+  cases impl with p q,
+  exact p,
   cases impl with p q,
   left,
-  cases p,
-  exact p_right,
+  cases p with p_p p_q,
+  exact p_q,
   right,
-  cases q,
-  exact q_right,
+  cases q with q_p q_q,
+  exact q_q,
 end
 
 theorem distr_disj_conj :
   P∨(Q∧R) → (P∨Q)∧(P∨R)  :=
 begin
   intro impl,
-  cases impl with p qr,
+  cases impl with p qer,
   split,
   left,
   assumption, 
   left,
   assumption, 
-  cases qr with q r,
+  cases qer with q r,
   split,
   right,
-  assumption,
+  exact q,
   right,
-  assumption,
+  exact r,
 end
 
 theorem distr_disj_conj_converse :
   (P∨Q)∧(P∨R) → P∨(Q∧R)  :=
 begin
   intro impl,
-  cases impl with pq pr,
-  cases pq,
-  left,exact pq,
-  cases pr,
+  cases impl with pouq pour,
+  cases pouq,
+  left,exact pouq,
+  cases pour,
   left,
-  exact pr,
+  exact pour,
   right,
   split,
-  exact pq,
-  exact pr,
+  exact pouq,
+  exact pour,
 end
 
 
@@ -400,24 +344,21 @@ end
 theorem curry_prop :
   ((P∧Q)→R) → (P→(Q→R))  :=
 begin
-  intro impl,
-  intro p,
-  intro q,
+  intros impl p q,
   apply impl,
   split,
-  assumption,
+  assumption, 
   assumption,
 end
 
 theorem uncurry_prop :
   (P→(Q→R)) → ((P∧Q)→R)  :=
 begin
-  intro impl,
-  intro pq,
-  cases pq,
+  intros impl pq,
+  cases pq with p q,
   apply impl,
-  exact pq_left,
-  exact pq_right,
+  exact p,
+  exact q,
 end
 
 
@@ -456,16 +397,16 @@ theorem weaken_conj_right :
   (P∧Q) → P  :=
 begin
   intro impl,
-  cases impl,
-  exact impl_left,
+  cases impl with p q,
+  exact p,
 end
 
 theorem weaken_conj_left :
   (P∧Q) → Q  :=
 begin
   intro impl,
-  cases impl,
-  exact impl_right,
+  cases impl with p q,
+  exact q,
 end
 
 theorem conj_idempot :
@@ -473,12 +414,12 @@ theorem conj_idempot :
 begin
   split,
   intro p,
-  cases p,
+  cases p with p p,
   assumption,
   intro p,
   split,
-  exact p,
-  exact p,
+  assumption, 
+  assumption,
 
 end
 
@@ -488,11 +429,11 @@ begin
   split,
   intro p,
   cases p,
-  exact p,
-  exact p,
+  assumption, 
+  assumption,
   intro p,
   left,
-  exact p,
+  assumption,
 end
 
 end propositional
@@ -514,9 +455,7 @@ variables P Q : U -> Prop
 theorem demorgan_exists :
   ¬(∃x, P x) → (∀x, ¬P x)  :=
 begin
-  intro impl,
-  intro x,
-  intro px,
+  intros impl x px,
   apply impl,
   existsi x,
   exact px,
@@ -525,15 +464,14 @@ end
 theorem demorgan_exists_converse :
   (∀x, ¬P x) → ¬(∃x, P x)  :=
 begin
-  intro Vx,
-  intro Ex,
+  intros Vx Ex,
   cases Ex with x p,
   have px:¬P x:=Vx x,
   have newfalse:false:=px p,
   contradiction,
 end
 
-theorem demorgan_forall :
+theorem demorgan_forall :--**
   ¬(∀x, P x) → (∃x, ¬P x)  :=
 begin
   intro Vx,
@@ -549,8 +487,7 @@ end
 theorem demorgan_forall_converse :
   (∃x, ¬P x) → ¬(∀x, P x)  :=
 begin
-  intro Ex,
-  intro Vx,
+  intros Ex Vx,
   cases Ex with x p,
   have px:P x:=Vx x,
   have newfalse:false:=p px,
@@ -561,38 +498,16 @@ theorem demorgan_forall_law :
   ¬(∀x, P x) ↔ (∃x, ¬P x)  :=
 begin
   split,
-  intro Vx,
-  by_contradiction nE,
-  apply Vx, 
-  intro x,
-  by_contradiction px,
-  apply nE,
-  existsi x,
-  exact px,
-  intro Ex,
-  intro Vx,
-  cases Ex with x p,
-  have px:P x:=Vx x,
-  have newfalse:false:=p px,
-  contradiction,
+  exact demorgan_forall U P,
+  exact demorgan_forall_converse U P,
 end
 
 theorem demorgan_exists_law :
   ¬(∃x, P x) ↔ (∀x, ¬P x)  :=
 begin
   split,
-  intro impl,
-  intro x,
-  intro px,
-  apply impl,
-  existsi x,
-  exact px,
-  intro Vx,
-  intro Ex,
-  cases Ex with x p,
-  have px:¬P x:=Vx x,
-  have newfalse:false:=px p,
-  contradiction,
+  exact demorgan_exists U P,
+  exact demorgan_exists_converse U P,
 end
 
 
@@ -601,10 +516,9 @@ end
 ------------------------------------------------
 
 theorem exists_as_neg_forall :
-  (∃x, P x) → ¬(∀x, ¬P x)  :=
+  (∃x, P x) → ¬(∀x, ¬P x)  := 
 begin
-  intro impl,
-  intro parat,
+  intros impl parat,
   cases impl with p np x,
   have px: ¬P p := parat p,
   have newfalse: false:= px np,
@@ -615,18 +529,16 @@ theorem forall_as_neg_exists :
   (∀x, P x) → ¬(∃x, ¬P x)  :=
 begin
   intro Vx,
-  by_contradiction nE,
-  cases nE with x p,
-  have px:P x:= Vx x,
-  have newfalse: false:=p px,
+  intro Ex,
+  cases Ex with x Px,
+  have px:P x:=Vx x,
   contradiction,
 end
 
-theorem forall_as_neg_exists_converse :
+theorem forall_as_neg_exists_converse :--**
   ¬(∃x, ¬P x) → (∀x, P x)  :=
 begin
-  intro Ex,
-  intro x,
+  intros Ex x,
   by_contradiction npx,
   apply Ex,
   existsi x,
@@ -636,52 +548,24 @@ end
 theorem exists_as_neg_forall_converse :
   ¬(∀x, ¬P x) → (∃x, P x)  :=
 begin
-  intro Vx,
-  by_contradiction nEx,
-  apply Vx,
-  intro x,
-  by_contradiction npx,
-  apply nEx,
-  existsi x,
-  exact npx,
+  rw [ contrapositive_law , doubleneg_law],
+  exact demorgan_exists U P,
 end
 
-theorem forall_as_neg_exists_law :
+theorem forall_as_neg_exists_law :--**
   (∀x, P x) ↔ ¬(∃x, ¬P x)  :=
 begin
   split,
-  intro Vx,
-  by_contradiction nE,
-  cases nE with x p,
-  have px:P x:= Vx x,
-  have newfalse: false:=p px,
-  contradiction,
-  intro Ex,
-  intro x,
-  by_contradiction npx,
-  apply Ex,
-  existsi x,
-  exact npx,
+  exact forall_as_neg_exists U P,
+  exact forall_as_neg_exists_converse U P,
 end
 
-theorem exists_as_neg_forall_law :
+theorem exists_as_neg_forall_law :--**
   (∃x, P x) ↔ ¬(∀x, ¬P x)  :=
 begin
   split,
-  intro impl,
-  intro parat,
-  cases impl with p np x,
-  have px: ¬P p := parat p,
-  have newfalse: false:= px np,
-  contradiction,
-  intro Vx,
-  by_contradiction nEx,
-  apply Vx,
-  intro x,
-  by_contradiction npx,
-  apply nEx,
-  existsi x,
-  exact npx,
+  exact exists_as_neg_forall U P,
+  exact exists_as_neg_forall_converse U P,
 end
 
 
@@ -694,28 +578,28 @@ theorem exists_conj_as_conj_exists :
 begin
   intro Ex,
   split,
-  cases Ex with p q,
-  existsi p,
-  cases q,
-  assumption,
-  cases Ex with p q,
-  existsi p,
-  cases q,
-  assumption,
+  cases Ex with x px_or_qx,
+  existsi x,
+  cases px_or_qx with px qx,
+  exact px,
+  cases Ex with x px_or_qx,
+  existsi x,
+  cases px_or_qx with px qx,
+  exact qx,
 end
 
 theorem exists_disj_as_disj_exists :
   (∃x, P x ∨ Q x) → (∃x, P x) ∨ (∃x, Q x)  :=
 begin
   intro Ex,
-  cases Ex with p q,
+  cases Ex with x q,
   cases q with px qx,
   left,
-  existsi p,
-  assumption,
+  existsi x,
+  exact px,
   right,
-  existsi p,
-  assumption,
+  existsi x,
+  exact qx,
 end
 
 theorem exists_disj_as_disj_exists_converse :
@@ -723,14 +607,14 @@ theorem exists_disj_as_disj_exists_converse :
 begin
   intro Ex,
   cases Ex with p q,
-  cases p with x p,
+  cases p with x px,
   existsi x,
   left,
-  assumption,
-  cases q with x q,
+  exact px,
+  cases q with x qx,
   existsi x,
   right,
-  assumption,
+  exact qx,
 end
 
 theorem forall_conj_as_conj_forall :
@@ -740,12 +624,12 @@ begin
   split,
   intro x,
   have pxq:P x ∧ Q x:=Vx x,
-  cases pxq,
-  assumption,
+  cases pxq with px qx,
+  exact px,
   intro x,
   have pxq:P x ∧ Q x:=Vx x,
   cases pxq,
-  assumption,
+  exact pxq_right,
 end
 
 theorem forall_conj_as_conj_forall_converse :
@@ -756,10 +640,10 @@ begin
   split,
   cases Vx with px qx,
   have impx:P x:=px x,
-  assumption,
+  exact impx,
   cases Vx with px qx,
   have imqx:Q x:=qx x,
-  assumption,
+  exact imqx,
 end
 
 
@@ -771,10 +655,10 @@ begin
   cases Vx with px qx,
   left,
   have impx:P x:=px x,
-  assumption,
+  exact impx,
   right,
   have imqx:Q x:=qx x,
-  assumption,
+  exact imqx,
 end
 
 
