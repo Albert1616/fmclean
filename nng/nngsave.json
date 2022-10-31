@@ -5,52 +5,52 @@
     {
       "lean": "lemma example1 (x y z : mynat) : x * y + z = x * y + z :=\n",
       "isSolved": true,
-      "editorText": "refl\r\n"
+      "editorText": "refl,"
     },
     {
       "lean": "lemma example2 (x y : mynat) (h : y = x + 7) : 2 * y = 2 * (x + 7) :=\n",
       "isSolved": true,
-      "editorText": "rw h;\r\nrefl\r\n\r\n"
+      "editorText": "rw h;\r\nrefl,"
     },
     {
       "lean": "lemma example3 (a b : mynat) (h : succ a = b) : succ(succ(a)) = succ(b) :=\n",
       "isSolved": true,
-      "editorText": "rw h;\r\nrefl\r\n"
+      "editorText": "rw h,\r\nrefl,\r\n"
     },
     {
       "lean": "lemma add_succ_zero (a : mynat) : a + succ(0) = succ(a) :=\n",
       "isSolved": true,
-      "editorText": "rw add_succ;\r\nrw add_zero;\r\nrefl\r\n"
+      "editorText": "rw add_succ,\r\nrw add_zero,\r\nrefl,"
     },
     {
       "lean": "lemma zero_add (n : mynat) : 0 + n = n :=\n",
       "isSolved": true,
-      "editorText": "induction n with d hd,\r\nrw add_zero,\r\nrefl,\r\nrw add_succ,\r\nrw hd,\r\nrefl,"
+      "editorText": "induction n with n' h,\r\nrw add_zero,\r\nrefl,\r\nrw add_succ,\r\nrw h,\r\nrefl,"
     },
     {
       "lean": "lemma add_assoc (a b c : mynat) : (a + b) + c = a + (b + c) :=\n",
       "isSolved": true,
-      "editorText": "induction c with x cx,\r\nrw add_zero,\r\nrw add_zero,\r\nrefl,\r\nrw add_succ,\r\nrw add_succ,\r\nrw add_succ,\r\nrw cx,\r\nrefl,"
+      "editorText": "induction c with c' h,\r\nrw add_zero,\r\nrw add_zero,\r\nrefl,\r\nrw add_succ,\r\nrw add_succ,\r\nrw add_succ,\r\nrw h,\r\nrefl,"
     },
     {
       "lean": "lemma succ_add (a b : mynat) : succ a + b = succ (a + b) :=\n",
       "isSolved": true,
-      "editorText": "induction b with x bx,\r\nrw add_zero,\r\nrw add_zero,\r\nrefl,\r\nrw add_succ,\r\nrw add_succ,\r\nrw bx,\r\nrefl,\r\n"
+      "editorText": "induction b with b' h,\r\nrw add_zero,\r\nrw add_zero,\r\nrefl,\r\nrw add_succ,\r\nrw add_succ,\r\nrw h,\r\nrefl,\r\n"
     },
     {
       "lean": "lemma add_comm (a b : mynat) : a + b = b + a :=\n",
       "isSolved": true,
-      "editorText": "induction a with x ax,\r\nrw zero_add,\r\nrw add_zero,\r\nrefl,\r\nrw succ_add,\r\nrw add_succ,\r\nrw ax,\r\nrefl,"
+      "editorText": "induction a with a' h,\r\nrw zero_add,\r\nrw add_zero,\r\nrefl,\r\nrw succ_add,\r\nrw add_succ,\r\nrw h,\r\nrefl,"
     },
     {
       "lean": "theorem succ_eq_add_one (n : mynat) : succ n = n + 1 :=\n",
       "isSolved": true,
-      "editorText": "induction n with x nx,\r\nrw one_eq_succ_zero,\r\nrw zero_add,\r\nrefl,\r\nrw succ_add,\r\nrw nx,\r\nrefl,"
+      "editorText": "induction n with n' h,\r\nrw one_eq_succ_zero,\r\nrw zero_add,\r\nrefl,\r\nrw succ_add,\r\nrw h,\r\nrefl,"
     },
     {
       "lean": "lemma add_right_comm (a b c : mynat) : a + b + c = a + c + b :=\n",
       "isSolved": true,
-      "editorText": "induction c with x cx,\r\nrw add_zero,\r\nrw add_zero,\r\nrefl,\r\nrw add_succ,\r\nrw add_succ,\r\nrw succ_add,\r\nrw cx,\r\nrefl,"
+      "editorText": "induction c with c' h,\r\nrw add_zero,\r\nrw add_zero,\r\nrefl,\r\nrw add_succ,\r\nrw add_succ,\r\nrw succ_add,\r\nrw h,\r\nrefl,"
     },
     {
       "lean": "lemma zero_mul (m : mynat) : 0 * m = 0 :=\n",
@@ -70,32 +70,32 @@
     {
       "lean": "lemma mul_add (t a b : mynat) : t * (a + b) = t * a + t * b :=\n",
       "isSolved": true,
-      "editorText": "induction a with x ax,\r\nrw zero_add,\r\nrw mul_zero,\r\nrw zero_add,\r\nrefl,\r\nrw succ_add,\r\nrw mul_succ,\r\nrw mul_succ,\r\nrw add_right_comm,\r\nrw ax,\r\nrefl,"
+      "editorText": "induction a with a' h,\r\nrw zero_add,\r\nrw mul_zero,\r\nrw zero_add,\r\nrefl,\r\nrw succ_add,\r\nrw mul_succ,\r\nrw mul_succ,\r\nrw add_right_comm,\r\nrw h,\r\nrefl,"
     },
     {
       "lean": "lemma mul_assoc (a b c : mynat) : (a * b) * c = a * (b * c) :=\n",
       "isSolved": true,
-      "editorText": "induction c with x cx,\r\nrepeat {rw mul_zero},\r\nrepeat {rw mul_succ},\r\nrw mul_add,\r\nrwa [cx],"
+      "editorText": "induction c with c' h,\r\nrepeat {rw mul_zero},\r\nrepeat {rw mul_succ},\r\nrw mul_add,\r\nrwa [h],"
     },
     {
       "lean": "lemma succ_mul (a b : mynat) : succ a * b = a * b + b :=\n",
       "isSolved": true,
-      "editorText": "induction b with x bx,\r\nrepeat {rw mul_zero},\r\nrwa [add_zero],\r\nrepeat {rw mul_succ},\r\nrepeat {rw add_succ},\r\nrw add_right_comm,\r\nrwa [bx],"
+      "editorText": "induction b with b' h,\r\nrepeat {rw mul_zero},\r\nrwa [add_zero],\r\nrepeat {rw mul_succ},\r\nrepeat {rw add_succ},\r\nrw add_right_comm,\r\nrwa [h],"
     },
     {
       "lean": "lemma add_mul (a b t : mynat) : (a + b) * t = a * t + b * t :=\n",
       "isSolved": true,
-      "editorText": "induction a with x ax,\r\nrw zero_mul,\r\nrepeat {rw zero_add},\r\nrw succ_add,\r\nrepeat {rw succ_mul},\r\nrw ax,\r\nrwa [add_right_comm],"
+      "editorText": "induction a with a' h,\r\nrw zero_mul,\r\nrepeat {rw zero_add},\r\nrw succ_add,\r\nrepeat {rw succ_mul},\r\nrw h,\r\nrwa [add_right_comm],"
     },
     {
       "lean": "lemma mul_comm (a b : mynat) : a * b = b * a :=\n",
       "isSolved": true,
-      "editorText": "induction a with x ax,\r\nrw zero_mul,\r\nrwa [mul_zero],\r\nrw succ_mul,\r\nrw mul_succ,\r\nrwa [ax],"
+      "editorText": "induction a with a' h,\r\nrw zero_mul,\r\nrwa [mul_zero],\r\nrw succ_mul,\r\nrw mul_succ,\r\nrwa [h],"
     },
     {
       "lean": "lemma mul_left_comm (a b c : mynat) : a * (b * c) = b * (a * c) :=\n",
       "isSolved": true,
-      "editorText": "induction c with x cx,\r\nrepeat {rw mul_zero},\r\nrepeat {rw mul_succ},\r\nrepeat {rw mul_add},\r\nrw mul_comm a b,\r\nrwa [cx],"
+      "editorText": "induction c with c' h,\r\nrepeat {rw mul_zero},\r\nrepeat {rw mul_succ},\r\nrepeat {rw mul_add},\r\nrw mul_comm a b,\r\nrwa [h],"
     },
     {
       "lean": "lemma zero_pow_zero : (0 : mynat) ^ (0 : mynat) = 1 :=\n",
@@ -115,27 +115,27 @@
     {
       "lean": "lemma one_pow (m : mynat) : (1 : mynat) ^ m = 1 :=\n",
       "isSolved": true,
-      "editorText": "induction m with x mx,\r\nrwa [pow_zero],\r\nrw pow_succ,\r\nrwa [mul_one],\r\n"
+      "editorText": "induction m with m' h,\r\nrwa [pow_zero],\r\nrw pow_succ,\r\nrwa [mul_one],\r\n"
     },
     {
       "lean": "lemma pow_add (a m n : mynat) : a ^ (m + n) = a ^ m * a ^ n :=\n",
       "isSolved": true,
-      "editorText": "induction m with x mx,\r\nrw zero_add,\r\nrw pow_zero,\r\nrwa [one_mul],\r\nrw succ_add,\r\nrepeat {rw pow_succ},\r\nrw mul_assoc,\r\nrw mul_left_comm,\r\nrw mul_comm a (a^x * a^n),\r\nrwa [mx],"
+      "editorText": "induction m with m' h,\r\nrw zero_add,\r\nrw pow_zero,\r\nrwa [one_mul],\r\nrw succ_add,\r\nrepeat {rw pow_succ},\r\nrw mul_assoc,\r\nrw mul_left_comm,\r\nrw mul_comm a (a^m' * a^n),\r\nrwa [h],"
     },
     {
       "lean": "lemma mul_pow (a b n : mynat) : (a * b) ^ n = a ^ n * b ^ n :=\n",
       "isSolved": true,
-      "editorText": "induction n with x tx,\r\nrepeat {rw pow_zero},\r\nsimp,\r\nrepeat {rw pow_succ},\r\nrw mul_assoc,\r\nrw mul_left_comm a (b^x) b,\r\nrw mul_comm (b^x) (a*b),\r\nrw mul_left_comm (a^x) (a*b) (b^x),\r\nrw tx,\r\nrwa [mul_comm (a*b) (a^x * b^x)],"
+      "editorText": "induction n with n' h,\r\nrepeat {rw pow_zero},\r\nrwa [mul_one],\r\nrepeat {rw pow_succ},\r\nrw mul_assoc,\r\nrw mul_left_comm a (b^n') b,\r\nrw mul_comm (b^n') (a*b),\r\nrw mul_left_comm (a^n') (a*b) (b^n'),\r\nrw h,\r\nrwa [mul_comm (a*b) (a^n' * b^n')],"
     },
     {
       "lean": "lemma pow_pow (a m n : mynat) : (a ^ m) ^ n = a ^ (m * n) :=\n",
       "isSolved": true,
-      "editorText": "induction n with x nx,\r\nrw mul_zero,\r\nrw pow_zero,\r\nrwa [pow_zero],\r\nrw pow_succ,\r\nrw mul_succ,\r\nrw pow_add,\r\nrwa [nx],"
+      "editorText": "induction n with n' h,\r\nrw mul_zero,\r\nrepeat {rw pow_zero},\r\nrw mul_succ,\r\nrepeat {rw pow_succ},\r\nrw pow_add,\r\nrwa [h],"
     },
     {
       "lean": "lemma add_squared (a b : mynat) :\n  (a + b) ^ (2 : mynat) = a ^ (2 : mynat) + b ^ (2 : mynat) + 2 * a * b :=\n",
       "isSolved": true,
-      "editorText": "rw two_eq_succ_one,\r\nrw one_eq_succ_zero,\r\nrepeat {rw pow_succ},\r\nrepeat {rw pow_zero},\r\nrepeat {rw one_mul},\r\nrw succ_eq_add_one,\r\nrw succ_eq_add_one,\r\nrw zero_add,\r\nrw add_mul 1 1 a,\r\nrepeat {rw one_mul},\r\nrw add_mul a a b,\r\nrw mul_comm,\r\nrw mul_add (a+b) a b,\r\nrw add_mul,\r\nrw add_mul,\r\nsimp,"
+      "editorText": "rw two_eq_succ_one,\r\nrw one_eq_succ_zero,\r\nrepeat {rw pow_succ},\r\nrepeat {rw pow_zero},\r\nrepeat {rw one_mul},\r\nrepeat {rw succ_eq_add_one},\r\nrw zero_add,\r\nrw add_mul 1 1 a,\r\nrepeat {rw one_mul},\r\nrw add_mul a a b,\r\nrw mul_comm,\r\nrw mul_add (a+b) a b,\r\nrepeat {rw add_mul},\r\nsimp,"
     },
     {
       "lean": "example (P Q : Type) (p : P) (h : P → Q) : Q :=\n",
@@ -165,17 +165,17 @@
     {
       "lean": "example (P Q R : Type) : (P → (Q → R)) → ((P → Q) → (P → R)) :=\n",
       "isSolved": true,
-      "editorText": "intros pqr qp p,\r\nhave j : Q → R := pqr p,\r\nhave q := qp(p),\r\napply j,\r\nexact q,"
+      "editorText": "intros h g f,\r\nhave j : Q → R := h f,\r\nhave q := g(f),\r\napply j,\r\nexact q,"
     },
     {
       "lean": "example (P Q F : Type) : (P → Q) → ((Q → F) → (P → F)) :=\n",
       "isSolved": true,
-      "editorText": "intros pq qf p,\r\nhave q := pq(p),\r\napply qf,\r\nexact q,"
+      "editorText": "intros h g f,\r\nhave q := h(f),\r\napply g,\r\nexact q,"
     },
     {
       "lean": "example (P Q : Type) : (P → Q) → ((Q → empty) → (P → empty)) :=\n",
       "isSolved": true,
-      "editorText": "intros pq qn p,\r\nhave q := pq(p),\r\napply qn,\r\nexact q,"
+      "editorText": "intros h g f,\r\nhave q := h(f),\r\napply g,\r\nexact q,"
     },
     {
       "lean": "example (A B C D E F G H I J K L : Type)\n(f1 : A → B) (f2 : B → E) (f3 : E → D) (f4 : D → A) (f5 : E → F)\n(f6 : F → C) (f7 : B → C) (f8 : F → G) (f9 : G → J) (f10 : I → J)\n(f11 : J → I) (f12 : I → H) (f13 : E → H) (f14 : H → K) (f15 : I → L)\n : A → L :=\n",
@@ -260,7 +260,7 @@
     {
       "lean": "lemma or_symm (P Q : Prop) : P ∨ Q → Q ∨ P :=\n",
       "isSolved": true,
-      "editorText": "intro pvq,\r\ncases pvq with p q,\r\nright,\r\nexact p,\r\nleft,\r\nexact q,"
+      "editorText": "intro h,\r\ncases h with p q,\r\nright,\r\nexact p,\r\nleft,\r\nexact q,"
     },
     {
       "lean": "lemma and_or_distrib_left (P Q R : Prop) : P ∧ (Q ∨ R) ↔ (P ∧ Q) ∨ (P ∧ R) :=\n",
@@ -270,7 +270,7 @@
     {
       "lean": "lemma contra (P Q : Prop) : (P ∧ ¬ P) → Q :=\n",
       "isSolved": true,
-      "editorText": "intro pnq,\r\ncases pnq with p np,\r\nexfalso,\r\nhave false := np(p),\r\nexact false,"
+      "editorText": "intro h,\r\ncases h with p np,\r\nexfalso,\r\nhave proof_false := np(p),\r\nexact proof_false,"
     },
     {
       "lean": "lemma contrapositive2 (P Q : Prop) : (¬ Q → ¬ P) → (P → Q) :=\n",
@@ -290,32 +290,32 @@
     {
       "lean": "theorem succ_eq_succ_of_eq {a b : mynat} : a = b → succ(a) = succ(b) :=\n",
       "isSolved": true,
-      "editorText": "intro h,\r\nrw h,\r\nrefl,"
+      "editorText": "intro h,\r\nrwa [h],"
     },
     {
       "lean": "theorem succ_eq_succ_iff (a b : mynat) : succ a = succ b ↔ a = b :=\n",
       "isSolved": true,
-      "editorText": "split,\r\nexact succ_inj,\r\nintro h,\r\nrw h,\r\nrefl,"
+      "editorText": "split,\r\nexact succ_inj,\r\nintro h,\r\nrwa [h],"
     },
     {
       "lean": "theorem add_right_cancel (a t b : mynat) : a + t = b + t → a = b :=\n",
       "isSolved": true,
-      "editorText": "intro h,\r\ninduction t with t,\r\nrepeat {rw add_zero at h},\r\nexact h,\r\nrepeat {rw add_succ at h},\r\napply t_ih,\r\napply succ_inj,\r\nexact h,"
+      "editorText": "intro h,\r\ninduction t with t' g,\r\nrepeat {rw add_zero at h},\r\nexact h,\r\nrepeat {rw add_succ at h},\r\napply g,\r\napply succ_inj,\r\nexact h,"
     },
     {
       "lean": "theorem add_left_cancel (t a b : mynat) : t + a = t + b → a = b :=\n",
       "isSolved": true,
-      "editorText": "intro h,\r\ninduction t with t,\r\nrepeat {rw zero_add at h},\r\nexact h,\r\nrepeat {rw succ_add at h},\r\napply t_ih,\r\napply succ_inj,\r\nexact h,"
+      "editorText": "intro h,\r\ninduction t with t' g,\r\nrepeat {rw zero_add at h},\r\nexact h,\r\nrepeat {rw succ_add at h},\r\napply g,\r\napply succ_inj,\r\nexact h,"
     },
     {
       "lean": "theorem add_right_cancel_iff (t a b : mynat) :  a + t = b + t ↔ a = b :=\n",
       "isSolved": true,
-      "editorText": "split,\r\nexact add_right_cancel _ _ _,\r\nintro h,\r\nrw h,\r\nrefl,"
+      "editorText": "split,\r\nexact add_right_cancel _ _ _,\r\nintro h,\r\nrwa [h],"
     },
     {
       "lean": "lemma eq_zero_of_add_right_eq_self {a b : mynat} : a + b = a → b = 0 :=\n",
       "isSolved": true,
-      "editorText": "intro h,\r\ninduction a with a,\r\nrw zero_add at h,\r\nexact h,\r\napply a_ih,\r\nrw succ_add at h,\r\napply succ_inj,\r\nexact h,"
+      "editorText": "intro h,\r\ninduction a with a' g,\r\nrw zero_add at h,\r\nexact h,\r\napply g,\r\nrw succ_add at h,\r\napply succ_inj,\r\nexact h,"
     },
     {
       "lean": "theorem succ_ne_zero (a : mynat) : succ a ≠ 0 := \n",
@@ -325,42 +325,42 @@
     {
       "lean": "lemma add_left_eq_zero {{a b : mynat}} (H : a + b = 0) : b = 0 :=\n",
       "isSolved": true,
-      "editorText": "cases b with x,\r\nrefl,\r\nrw add_succ at H,\r\nexfalso,\r\nexact succ_ne_zero (a+x) H,"
+      "editorText": "cases b with b',\r\nrefl,\r\nrw add_succ at H,\r\nexfalso,\r\nexact succ_ne_zero (a+b') H,"
     },
     {
       "lean": "lemma add_right_eq_zero {a b : mynat} : a + b = 0 → a = 0 :=\n",
       "isSolved": true,
-      "editorText": "intro h,\r\ncases b with b,\r\nrw add_zero at h,\r\nexact h,\r\nexfalso,\r\nexact succ_ne_zero (a+b) h,"
+      "editorText": "intro h,\r\ncases b with b',\r\nrw add_zero at h,\r\nexact h,\r\nexfalso,\r\nexact succ_ne_zero (a+b') h,"
     },
     {
       "lean": "theorem add_one_eq_succ (d : mynat) : d + 1 = succ d :=\n",
       "isSolved": true,
-      "editorText": "cases d with d,\r\nrw zero_add,\r\nrw one_eq_succ_zero,\r\nrefl,\r\nrw one_eq_succ_zero,\r\nrw add_succ,\r\nrw add_zero,\r\nrefl,"
+      "editorText": "cases d with d',\r\nrw zero_add,\r\nrwa [one_eq_succ_zero],\r\nrw one_eq_succ_zero,\r\nrw add_succ,\r\nrw add_zero,\r\nrefl,"
     },
     {
       "lean": "lemma ne_succ_self (n : mynat) : n ≠ succ n :=\n",
       "isSolved": true,
-      "editorText": "induction n with n,\r\napply zero_ne_succ,\r\nintro h,\r\nhave sn:= succ_inj h,\r\nhave bool := n_ih(sn),\r\nexact bool,"
+      "editorText": "induction n with n' g,\r\napply zero_ne_succ,\r\nintro h,\r\nhave n:= succ_inj h,\r\nhave bool := g(n),\r\nexact bool,"
     },
     {
       "lean": "theorem mul_pos (a b : mynat) : a ≠ 0 → b ≠ 0 → a * b ≠ 0 :=\n",
       "isSolved": true,
-      "editorText": "cases b with n,\r\nintros h y g,\r\napply y,\r\nrefl,\r\nintros h y g,\r\nrw mul_succ at g,\r\nhave zero_a:= add_left_eq_zero g,\r\nexact h(zero_a),"
+      "editorText": "cases b with b',\r\nintros h g f,\r\napply g,\r\nrefl,\r\nintros h g f,\r\nrw mul_succ at f,\r\nhave zero_a:= add_left_eq_zero f,\r\nexact h(zero_a),"
     },
     {
       "lean": "theorem eq_zero_or_eq_zero_of_mul_eq_zero (a b : mynat) (h : a * b = 0) :\n  a = 0 ∨ b = 0 :=\n",
       "isSolved": true,
-      "editorText": "induction b with b,\r\nright,\r\nrefl,\r\nrw mul_succ at h,\r\nhave zero_a:= add_left_eq_zero(h),\r\nleft,\r\nexact zero_a,"
+      "editorText": "induction b with b' with g,\r\nright,\r\nrefl,\r\nrw mul_succ at h,\r\nhave zero_a:= add_left_eq_zero(h),\r\nleft,\r\nexact zero_a,"
     },
     {
       "lean": "theorem mul_eq_zero_iff (a b : mynat): a * b = 0 ↔ a = 0 ∨ b = 0 :=\n",
       "isSolved": true,
-      "editorText": "\r\nsplit,\r\nexact eq_zero_or_eq_zero_of_mul_eq_zero a b,\r\nintro ab,\r\ncases ab,\r\nrw ab,\r\nrwa [zero_mul],\r\nrw ab,\r\nrwa [mul_zero],"
+      "editorText": "split,\r\nexact eq_zero_or_eq_zero_of_mul_eq_zero a b,\r\nintro h,\r\ncases h,\r\nrw h,\r\nrwa [zero_mul],\r\nrw h,\r\nrwa [mul_zero],"
     },
     {
       "lean": "theorem mul_left_cancel (a b c : mynat) (ha : a ≠ 0) : a * b = a * c → b = c :=\n",
       "isSolved": true,
-      "editorText": "revert b,\r\ninduction c with c,\r\nintros b ab,\r\nrw mul_zero at ab,\r\nrw mul_eq_zero_iff at ab,\r\ncases ab,\r\nexfalso,\r\nexact ha(ab),\r\nexact ab,\r\nintros b h,\r\ncases b,\r\nrw mul_zero at h,\r\nsymmetry at h,\r\nrw mul_eq_zero_iff at h,\r\ncases h,\r\nexfalso,\r\nexact ha(h),\r\nsymmetry at h,\r\nexact h,\r\nrepeat {rw mul_succ at h},\r\nrw add_right_cancel_iff at h,\r\napply succ_eq_succ_of_eq,\r\nhave abc := c_ih(b),\r\nhave bc := abc(h),\r\nexact bc,"
+      "editorText": "revert b,\r\ninduction c with c' g,\r\nintros b h,\r\nrw mul_zero at h,\r\nrw mul_eq_zero_iff at h,\r\ncases h,\r\nexfalso,\r\nexact ha(h),\r\nexact h,\r\nintros b h,\r\ncases b,\r\nrw mul_zero at h,\r\nsymmetry at h,\r\nrw mul_eq_zero_iff at h,\r\ncases h,\r\nexfalso,\r\nexact ha(h),\r\nsymmetry at h,\r\nexact h,\r\nrepeat {rw mul_succ at h},\r\nrw add_right_cancel_iff at h,\r\napply succ_eq_succ_of_eq,\r\nhave abc := g(b),\r\nhave bc := abc(h),\r\nexact bc,"
     },
     {
       "lean": "lemma one_add_le_self (x : mynat) : x ≤ 1 + x :=\n",
@@ -375,7 +375,7 @@
     {
       "lean": "theorem le_succ (a b : mynat) : a ≤ b → a ≤ (succ b) :=\n",
       "isSolved": true,
-      "editorText": "\r\nintro ab,\r\ncases ab with c hc,\r\nrw hc,\r\nrw succ_eq_add_one,\r\nuse c+1,\r\nrefl,"
+      "editorText": "intro h,\r\ncases h with c g,\r\nrw g,\r\nrw succ_eq_add_one,\r\nuse c+1,\r\nrefl,"
     },
     {
       "lean": "lemma zero_le (a : mynat) : 0 ≤ a :=\n",
@@ -405,7 +405,7 @@
     {
       "lean": "theorem le_total (a b : mynat) : a ≤ b ∨ b ≤ a :=\n",
       "isSolved": true,
-      "editorText": "revert a,\r\ninduction b with b g,\r\nintro a,\r\nright,\r\nuse a,\r\nrwa [zero_add],\r\nintro a,\r\ncases a,\r\nleft,\r\nrw succ_eq_add_one,\r\nuse b+1,\r\nrwa [zero_add],\r\nhave h:=g(a),\r\ncases h,\r\nleft,\r\napply succ_le_succ,\r\nexact h,\r\nright,\r\napply succ_le_succ,\r\nexact h,"
+      "editorText": "revert a,\r\ninduction b with b' g,\r\nintro a,\r\nright,\r\nuse a,\r\nrwa [zero_add],\r\nintro a,\r\ncases a,\r\nleft,\r\nrw succ_eq_add_one,\r\nuse b'+1,\r\nrwa [zero_add],\r\nhave h:=g(a),\r\ncases h,\r\nleft,\r\napply succ_le_succ,\r\nexact h,\r\nright,\r\napply succ_le_succ,\r\nexact h,"
     },
     {
       "lean": "lemma le_succ_self (a : mynat) : a ≤ succ a :=\n",
@@ -415,22 +415,22 @@
     {
       "lean": "theorem add_le_add_right {a b : mynat} : a ≤ b → ∀ t, (a + t) ≤ (b + t) :=\n",
       "isSolved": true,
-      "editorText": "intros ab t,\r\ncases ab with c h,\r\nrw h,\r\nuse c,\r\nrw add_right_comm a t c,\r\nrefl,"
+      "editorText": "intros ab t,\r\ncases ab with c h,\r\nrw h,\r\nuse c,\r\nrwa [add_right_comm a t c],"
     },
     {
       "lean": "theorem le_of_succ_le_succ (a b : mynat) : succ a ≤ succ b → a ≤ b :=\n",
       "isSolved": true,
-      "editorText": "intro h,\r\ncases h with c g,\r\nrw succ_add at g,\r\nhave h1:= succ_inj g,\r\nrw h1,\r\nuse c,\r\nrefl,\r\n"
+      "editorText": "intro h,\r\ncases h with c g,\r\nrw succ_add at g,\r\nhave h1:= succ_inj g,\r\nrw h1,\r\nuse c,\r\nrefl,"
     },
     {
       "lean": "theorem not_succ_le_self (a : mynat) : ¬ (succ a ≤ a) :=\n",
       "isSolved": true,
-      "editorText": "intro h,\r\ninduction a with a g,\r\nhave h1 := le_zero (succ 0) h,\r\napply succ_ne_zero 0,\r\nexact h1,\r\napply g,\r\napply le_of_succ_le_succ (succ a) a,\r\nexact h,"
+      "editorText": "intro h,\r\ninduction a with a' g,\r\nhave h1 := le_zero (succ 0) h,\r\napply succ_ne_zero 0,\r\nexact h1,\r\napply g,\r\napply le_of_succ_le_succ (succ a') a',\r\nexact h,"
     },
     {
       "lean": "theorem add_le_add_left {a b : mynat} (h : a ≤ b) (t : mynat) :\n  t + a ≤ t + b :=\n",
       "isSolved": true,
-      "editorText": "cases h with c g,\r\nrw g,\r\nuse c,\r\nrw add_assoc,\r\nrefl,"
+      "editorText": "cases h with c g,\r\nrw g,\r\nuse c,\r\nrwa [add_assoc],"
     },
     {
       "lean": "lemma lt_aux_one (a b : mynat) : a ≤ b ∧ ¬ (b ≤ a) → succ a ≤ b :=\n",
