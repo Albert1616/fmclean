@@ -379,11 +379,13 @@
     },
     {
       "lean": "lemma zero_le (a : mynat) : 0 ≤ a :=\n",
+      "isSolved": true,
       "editorText": "use a,\r\nrwa [zero_add],"
     },
     {
       "lean": "theorem le_trans (a b c : mynat) (hab : a ≤ b) (hbc : b ≤ c) : a ≤ c :=\n",
-      "editorText": "cases hab with y with h,\r\ncases hbc with x with g,\r\nrw hbc_h,\r\nrw hab_h,\r\nuse y+x,\r\nrw add_assoc,\r\nrefl,"
+      "isSolved": true,
+      "editorText": "cases hab with c h,\r\ncases hbc with d g,\r\nrw h at g,\r\nrw g,\r\nuse c+d,\r\nrwa [add_assoc],"
     },
     {
       "lean": "theorem le_antisymm (a b : mynat) (hab : a ≤ b) (hba : b ≤ a) : a = b :=\n",
@@ -432,15 +434,18 @@
     },
     {
       "lean": "lemma lt_aux_one (a b : mynat) : a ≤ b ∧ ¬ (b ≤ a) → succ a ≤ b :=\n",
-      "editorText": "intro h,\r\ncases h with g1 g2,\r\n"
+      "isSolved": true,
+      "editorText": "intro h,\r\ncases h with g1 g2,\r\ncases g1 with c h,\r\ncases c,\r\nrw add_zero at h,\r\nexfalso,\r\napply g2,\r\nuse 0,\r\nrw add_zero,\r\nrwa [h],\r\nrw h,\r\nrepeat {rw succ_eq_add_one},\r\nuse c,\r\nrw add_right_comm,\r\nrefl,"
     },
     {
       "lean": "lemma lt_aux_two (a b : mynat) : succ a ≤ b → a ≤ b ∧ ¬ (b ≤ a) :=\n",
-      "editorText": "sorry"
+      "isSolved": true,
+      "editorText": "intro h,\r\nsplit,\r\ncases h with c g,\r\nrw succ_eq_add_one at g,\r\nrw g,\r\nuse c+1,\r\nrw add_right_comm,\r\nrefl,\r\nintro g,\r\nhave h1 := le_trans (succ a) b a h g,\r\napply not_succ_le_self a,\r\nexact h1,"
     },
     {
       "lean": "lemma lt_iff_succ_le (a b : mynat) : a < b ↔ succ a ≤ b :=\n",
-      "editorText": "sorry"
+      "isSolved": true,
+      "editorText": "split,\r\nexact lt_aux_one a b,\r\nexact lt_aux_two a b,"
     }
   ]
 }
